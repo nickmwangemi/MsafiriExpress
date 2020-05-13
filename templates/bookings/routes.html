@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+
+
+
+{% block title %} | Browse Our Routes {% endblock %}
+
+{% block content %}
+<section id="showcase-inner" class="py-5 text-white">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-12">
+          <h1 class="display-4">Book A Trip</h1>
+          <p class="lead">Book your journey in a safe, secure, fast and convenient manner.</p>
+          <p>We currently operate on the Nairobi - Mombasa route. Plans are underway to expand our offerings to other destinations.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Breadcrumb -->
+  <section id="bc" class="mt-3">
+    <div class="container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="{% url 'pages:index' %}">
+              <i class="fas fa-home"></i> Home</a>
+          </li>
+          <li class="breadcrumb-item active"> Routes</li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  <!-- Routes -->
+  <section id="listings" class="py-4">
+    <div class="container">
+      <div class="row">
+        {% if routes %}
+          {% for route in routes %}
+          <div class="col-md-6 col-lg-4 mb-4">
+              <div class="card listing-preview">
+                <img class="card-img-top" src="{{ route.image.url }}" alt="">
+                <div class="card-img-overlay">
+                  <h2>
+                    <span class="badge badge-primary text-white">Ksh. {{ route.price }}</span>
+                  </h2>
+                </div>
+                <div class="card-body">
+                  <div class="route-heading text-center">
+                    <h4 class="text-primary">{{ route.origin }} - {{ route.destination }}</h4>
+                    <p>
+                  </div>
+                  <hr>
+                 <div class="row py-2 ">
+                    <div class="col-6">
+                      <i class="fas fa-bus"></i> BUS TYPE: {{ route.bus_type }}</div>
+
+                    <div class="col-6">
+                      <i class="fas fa-clock"></i>DEPARTURE: {{ route.time_of_departure }} </div>
+
+                    <div class="col-6">
+                      <i class="fas fa-clipboard-list"></i> SEATS LEFT: {{ route.bus_type.number_of_seats }} </div>
+
+                  </div>
+                  <hr>
+ 
+                  <a href="{% url 'bookings:make_a_booking' route.id %}" class="btn btn-primary btn-block">BOOK NOW</a>
+                  
+                  
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <div class="col-md-12">
+            <p>No Buses Available For Booking</p>
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          {% if routes.has_other_pages %}
+            <ul class="pagination">
+              {% if routes.has_previous %}
+                <li class="page-item">
+                  <a href="?page={{ routes.previous_page_number }}" class="page-link">&laquo;</a>
+                </li>
+              {% else %}
+                <li class="page-item disabled">
+                  <a class="page-link">&laquo;</a>
+                </li>
+              {% endif %}
+              {% for i in routes.paginator.page_range %}
+                {% if routes.number == i %}
+                  <li class="page-item active">
+                    <a class="page-link">{{i}}</a>
+                  </li>
+                {% else %}
+                  <li class="page-item">
+                    <a href="?page={{i}}" class="page-link">{{i}}</a>
+                  </li>
+                {% endif %}
+              {% endfor %}
+              {% if routes.has_next %}
+                <li class="page-item">
+                  <a href="?page={{routes.next_page_number}}" class="page-link">&raquo;</a>
+                </li>
+              {% else %}
+                <li class="page-item disabled">
+                  <a class="page-link">&raquo;</a>
+                </li>
+              {% endif %}
+            </ul>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

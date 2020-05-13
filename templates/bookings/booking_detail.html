@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+
+{% block title %} | Booking Details {% endblock %}
+
+{% block content %}
+<section id="showcase-inner" class="py-5 text-white">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-12">
+          <h1 class="display-4">Booking Details</h1>
+          <p class="lead">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Breadcrumb -->
+  <section id="bc" class="mt-3">
+    <div class="container">
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="{% url 'pages:index' %}">Home</a>
+          </li>
+          <li class="breadcrumb-item">
+            <a href="{% url 'bookings:routes' %}">Routes</a>
+          </li>
+          <li class="breadcrumb-item active">Booking Details</li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  <!-- Alerts -->
+  {% include 'partials/_alerts.html' %}
+
+      <section id="about" class="py-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <h3 class="mb-3">BOOKED TRIP</h3>
+            <p><b>ROUTE</b>: {{ booking.route }}</p>
+            <p><b>COACH TYPE</b>: {{ booking.bus_details }}</p>
+            <p><b>BUS REG No.:</b> {{ booking.bus_details.reg_number }}</p>
+            <p><b>TIME OF DEPARTURE:</b> {{ booking.route.time_of_departure }}</p>
+            <p><b>DATE OF TRAVEL:</b> {{ route.date_of_travel | date:"F d, Y"}}</p>
+            <p><b>NUMBER OF TICKETS:</b> {{ booking.number_of_tickets }}</p>
+            <p><b>TOTAL PAID:</b> KSh. {{ payment.amount_paid }}</p>
+            <br>
+
+            <form action="{% url 'bookings:booking_detail' booking.id %}" method="post">
+            {% csrf_token %}
+                <a href="{% url 'bookings:ticket' booking.id %}" target="_blank"><input type="download" value="DOWNLOAD TICKET" class="btn btn-light"></a>
+            </form>
+      </div>
+    </div>
+  </div>
+  </section>
+
+    
+{% endblock %}

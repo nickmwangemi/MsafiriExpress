@@ -1,0 +1,132 @@
+{% extends 'base.html' %} 
+
+
+{% block title %} | Welcome {% endblock %}
+
+{% block content %}
+<br>
+<!-- Alerts -->
+  {% include 'partials/_alerts.html' %}
+
+<!-- Showcase -->
+<section id="showcase">
+    <div class="container text-center">
+      <div class="home-search p-5">
+        <div class="overlay p-5">
+          <h1 class="display-4 mb-4">
+            Easy, Fast, Secure and Convenient Booking at your fingertips.
+          </h1>
+          <p class="lead">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Recusandae quas, asperiores eveniet vel nostrum magnam
+            voluptatum tempore! Consectetur, id commodi!</p>
+          <div class="search">
+            <form action="{% url 'bookings:search' %}" method="get">
+              <!-- Form Row 1 -->
+              <div class="form-row">
+                
+                 <div class="col-md-4 mb-3">
+                  <label class="sr-only">From</label>
+                  <select name="origin" class="form-control">
+                    <option selected="true" disabled="disabled">From</option>
+                    {% for key,value in destinations.items %}
+                      <option value="{{ key }}">{{ value }}</option>
+                    {% endfor %}
+                  </select>
+                 </div>
+
+                 <div class="col-md-4 mb-3">
+                  <label class="sr-only">To</label>
+                  <select name="destination" class="form-control">
+                    <option selected="true" disabled="disabled">To</option>
+                    {% for key,value in destinations.items %}
+                      <option value="{{ key }}">{{ value }}</option>
+                    {% endfor %}
+                  </select>
+                 </div>
+
+                 <div class="col-md-4 mb-3">
+                      <input placeholder="Date of Travel" type="date" id="date-picker-example" class="form-control datepicker" name="date_of_travel">
+                      <label for="date-picker-example"></label>
+                 </div>
+              </div>
+              <button class="btn btn-primary btn-lg btn-block" type="submit">SEARCH</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+<br>
+  
+
+  <!-- Routes -->
+  <section id="routes" class="py-5">
+    <div class="container">
+      <h3 class="text-center mb-3">Popular Routes</h3>
+      <div class="row">
+        {% if routes %}
+          {% for route in routes %}
+            <!-- route 1 -->
+            <div class="col-md-6 col-lg-4 mb-4">
+              <div class="card listing-preview">
+                <img class="card-img-top" src="{{ route.image.url }}" alt="">
+                <div class="card-img-overlay">
+                  <h2>
+                    <span class="badge badge-primary text-white">Ksh.{{ route.price }}</span>
+                  </h2>
+                </div>
+                <div class="card-body">
+                  <div class="route-heading text-center">
+                    <h4 class="text-primary">{{ route.origin }} - {{ route.destination }}</h4>
+                    <p>
+                  </div>
+                  <hr>
+                  <div class="row py-2">
+                    <div class="col-6">
+                      <i class="fas fa-bus"></i> BUS TYPE: {{ route.bus_type }}</div>
+                    <div class="col-6">
+                      <i class="fas fa-clock"></i> TIME OF DEPARTURE: {{ route.time_of_departure }} </div>
+                    <div class="col-6">
+                      <i class="fas fa-clock"></i>SEATS LEFT: {{ route.bus_type.number_of_seats }} </div>
+                  </div>
+                  
+                  <hr>
+                  <a href="{% url 'bookings:make_a_booking' route.id %}" class="btn btn-primary btn-lg btn-block">BOOK NOW</a>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        {% else %} 
+          <div class="col-md-12">
+            <p>No Routes Available</p>
+          </div>
+        {% endif %} 
+
+      </div>
+    </div>
+  </section>
+
+  <section id="services" class="py-5 bg-secondary text-white">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-4">
+          <i class="fas fa-check fa-4x mr-4"></i>
+          <hr>
+          <h3>Comfort</h3>
+          <p>Our buses are spacious to offer plenty of legroom thus ensuring a comfortable and smooth ride to your destination.</p>
+        </div>
+        <div class="col-md-4">
+          <i class="fas fa-handshake fa-4x mr-4"></i>
+          <hr>
+          <h3>Safety Record</h3>
+          <p>Our safety record speaks for itself. All buses are regularly serviced to eliminate mechanical failures during trips.</p>
+        </div>
+        <div class="col-md-4">
+          <i class="fas fa-wifi fa-4x mr-4"></i>
+          <hr>
+          <h3>Onboard snacks & Entertainment</h3>
+          <p>Our buses are fitted with air conditioning, Wi-Fi and power outlets to charge your devices on the go. Snacks are also provided.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

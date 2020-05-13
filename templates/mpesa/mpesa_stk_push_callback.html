@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<form action="mpesa_stk_push_callback" method="post">
+    {% csrf_token %}
+    {{ data }}
+
+</form>
+{% endblock  %}
