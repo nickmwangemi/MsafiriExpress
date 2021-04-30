@@ -91,12 +91,12 @@ WSGI_APPLICATION = 'Msafiri.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql',
         'HOST': '127.0.0.1',
-        'PORT': 3307,
-        'NAME': 'Msafiri',
-        'USER': 'root',
-        'PASSWORD': '',
+        'PORT': 5432,
+        'NAME': 'msafiri',
+        'USER': 'postgres',
+        'PASSWORD': 'boom',
     }
 }
 
