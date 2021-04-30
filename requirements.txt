@@ -16,7 +16,7 @@ commonmark==0.9.1
 compizconfig-python==0.9.14.1
 configobj==5.0.6
 crcmod==1.7
-cryptography==2.8
+cryptography==3.3.2
 cupshelpers==1.0
 dbus-python==1.2.16
 decorator==4.4.2
