@@ -31,7 +31,7 @@ Before setting up, please make sure that you have Python3.6+ installed and runni
   pip3 install -r requirements.txt
 ```
 
-5. Create database (Please be sure to updated the database settings in PropertyWatch/settings.py to a database of your choosing i.e sqlite3, MySQL, PostgreSQL)
+5. Create database (Please be sure to updated the database settings in Msafiri/settings.py to a database of your choosing i.e sqlite3, MySQL, PostgreSQL)
 ```bash
   python manage.py migrate
 ```
@@ -54,4 +54,4 @@ This application is built using HTML, CSS and Bootstrap on the frontend, Django 
 
 
 ## Live Demo
-A live demo of this project is available at: [Property Watch](https://msafiriexpress.herokuapp.com/)
+A live demo of this project is available at: [Msafiri Express](https://msafiriexpress.herokuapp.com/)
