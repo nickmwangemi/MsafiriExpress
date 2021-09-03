@@ -39,37 +39,36 @@ def send_email(request):
 
 class Pdf(View):
     def get(self, request, pk):
-        if request.user.is_authenticated:
-            template = get_template('ticket.html')
-            booking = Booking.objects.get(pk=pk)
-            route = TravelRoute()
-            payment = Payment.objects.get(payment_for_id=booking.id)
-            today = timezone.now()
-            context = {
-                'today':today,
-                'booking':booking,
-                'route':route,
-                'payment':payment,
-                'request':request,
-            }
-            html = template.render(context)
-            pdf = render_to_pdf('ticket.html', context)
-
-            
-            
-            if pdf:
-                response = HttpResponse(pdf, content_type='application/pdf')
-                filename = "%s" %("Msafiri_Express_Ticket") 
-                content = "inline; filename='%s'" %(filename)
-                download = request.GET.get("download")
-                if download:
-                    content = "attachment; filename='%s'" %(filename)
-                response['Content-Disposition'] = content
-                send_email(request)
-                return response
-            return HttpResponse("Not found")
-        else:
+        if not request.user.is_authenticated:
             return HttpResponse("You are not allowed to view this resource.")
+        template = get_template('ticket.html')
+        booking = Booking.objects.get(pk=pk)
+        route = TravelRoute()
+        payment = Payment.objects.get(payment_for_id=booking.id)
+        today = timezone.now()
+        context = {
+            'today':today,
+            'booking':booking,
+            'route':route,
+            'payment':payment,
+            'request':request,
+        }
+        html = template.render(context)
+        pdf = render_to_pdf('ticket.html', context)
+
+
+
+        if pdf:
+            response = HttpResponse(pdf, content_type='application/pdf')
+            filename = "%s" %("Msafiri_Express_Ticket") 
+            content = "inline; filename='%s'" %(filename)
+            download = request.GET.get("download")
+            if download:
+                content = "attachment; filename='%s'" %(filename)
+            response['Content-Disposition'] = content
+            send_email(request)
+            return response
+        return HttpResponse("Not found")
 
 
 def index(request):
@@ -90,47 +89,46 @@ def make_a_booking(request,pk):
     user = CustomUser()
     if not request.user.is_authenticated:
         messages.info(request,'Please login to proceed with booking.')
-    else:
-        if request.method == 'POST':
-            form = request.POST
-            # get form values
-            booking = Booking()
-            # get route price
-            route = TravelRoute.objects.get(pk=pk)
-            price = route.price
-            booking.route = route
-            booking.bus_details = Bus.objects.get(pk=form['bus_id'])
-            booking.customer_details = CustomUser.objects.get(pk=form['user_id'])
-            booking.number_of_tickets = request.POST['number_of_tickets']
-            booking.date_of_booking = request.POST['date_of_booking']
-            booking.amount_paid = int(booking.number_of_tickets)*int(price)
-            
-            cl = MpesaClient()
-            # Use a Safaricom phone number that you have access to, for you to be able to view the prompt.
-            phone_number = request.user.mobile_number
-            print(phone_number)
-            amount = booking.amount_paid
-            account_reference = 'Msafiri Ticket'
-            transaction_desc = 'Description'
-            callback_url = request.build_absolute_uri(reverse('mpesa_stk_push_callback'))
-            print(callback_url)
-            response = cl.stk_push(phone_number, amount, account_reference, transaction_desc, callback_url)
-            # stay on payment page then redirect if successful
-            # return HttpResponse(response.text)
+    elif request.method == 'POST':
+        form = request.POST
+        # get form values
+        booking = Booking()
+        # get route price
+        route = TravelRoute.objects.get(pk=pk)
+        price = route.price
+        booking.route = route
+        booking.bus_details = Bus.objects.get(pk=form['bus_id'])
+        booking.customer_details = CustomUser.objects.get(pk=form['user_id'])
+        booking.number_of_tickets = request.POST['number_of_tickets']
+        booking.date_of_booking = request.POST['date_of_booking']
+        booking.amount_paid = int(booking.number_of_tickets)*int(price)
 
-            # payment
-            payment = Payment()
-            payment.customer_details = booking.customer_details
-            payment.amount_paid = booking.amount_paid
-            payment.mode_of_payment = ModeOfPayment.objects.get(pk=1)
-            payment.payment_for = booking
-            
-                    
-            booking.save()
-            payment.save()
-            messages.success(request, 'Booking successful.')
-            return redirect('bookings:booking_detail',booking.pk)
-         
+        cl = MpesaClient()
+        # Use a Safaricom phone number that you have access to, for you to be able to view the prompt.
+        phone_number = request.user.mobile_number
+        print(phone_number)
+        amount = booking.amount_paid
+        account_reference = 'Msafiri Ticket'
+        transaction_desc = 'Description'
+        callback_url = request.build_absolute_uri(reverse('mpesa_stk_push_callback'))
+        print(callback_url)
+        response = cl.stk_push(phone_number, amount, account_reference, transaction_desc, callback_url)
+        # stay on payment page then redirect if successful
+        # return HttpResponse(response.text)
+
+        # payment
+        payment = Payment()
+        payment.customer_details = booking.customer_details
+        payment.amount_paid = booking.amount_paid
+        payment.mode_of_payment = ModeOfPayment.objects.get(pk=1)
+        payment.payment_for = booking
+
+
+        booking.save()
+        payment.save()
+        messages.success(request, 'Booking successful.')
+        return redirect('bookings:booking_detail',booking.pk)
+
     bookings = Booking.objects.all()
     context = {
         'route':route,
