@@ -6,13 +6,13 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('buses', '0002_auto_20200429_1119'),
-        ('travel_routes', '0003_auto_20200429_1144'),
+        ("buses", "0002_auto_20200429_1119"),
+        ("travel_routes", "0003_auto_20200429_1144"),
     ]
 
     operations = [
         migrations.RenameModel(
-            old_name='TravelRoutes',
-            new_name='TravelRoute',
+            old_name="TravelRoutes",
+            new_name="TravelRoute",
         ),
     ]

@@ -1,10 +1,10 @@
 import json
-from django.shortcuts import render
+
 from django.http import HttpResponse, JsonResponse
-from django_daraja.mpesa.core import MpesaClient
+from django.shortcuts import render
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
-
+from django_daraja.mpesa.core import MpesaClient
 
 # def index(request):
 #     cl = MpesaClient()
@@ -18,6 +18,7 @@ from django.views.decorators.csrf import csrf_exempt
 #     callback_url = request.build_absolute_uri(reverse('mpesa_stk_push_callback'))
 #     response = cl.stk_push(phone_number, amount, account_reference, transaction_desc, callback_url)
 #     return HttpResponse(response.text)
+
 
 @csrf_exempt
 def stk_push_callback(request):

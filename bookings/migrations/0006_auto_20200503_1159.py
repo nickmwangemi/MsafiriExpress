@@ -6,16 +6,16 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('bookings', '0005_booking_mode_of_payment'),
+        ("bookings", "0005_booking_mode_of_payment"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='booking',
-            name='amount_paid',
+            model_name="booking",
+            name="amount_paid",
         ),
         migrations.RemoveField(
-            model_name='booking',
-            name='mode_of_payment',
+            model_name="booking",
+            name="mode_of_payment",
         ),
     ]

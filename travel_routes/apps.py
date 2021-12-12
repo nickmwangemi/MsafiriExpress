@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class TravelRoutesConfig(AppConfig):
-    name = 'travel_routes'
+    name = "travel_routes"

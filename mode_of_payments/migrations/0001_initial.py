@@ -7,18 +7,25 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='ModeOfPayment',
+            name="ModeOfPayment",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('mode_of_payment', models.CharField(max_length=20)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("mode_of_payment", models.CharField(max_length=20)),
             ],
             options={
-                'db_table': 'tbl_Mode_Of_Payment',
+                "db_table": "tbl_Mode_Of_Payment",
             },
         ),
     ]

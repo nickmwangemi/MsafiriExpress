@@ -6,12 +6,12 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('mode_of_payments', '0001_initial'),
+        ("mode_of_payments", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='modeofpayment',
-            options={'verbose_name': 'Mode Of Payment'},
+            name="modeofpayment",
+            options={"verbose_name": "Mode Of Payment"},
         ),
     ]

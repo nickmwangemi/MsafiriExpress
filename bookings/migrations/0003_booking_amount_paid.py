@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('bookings', '0002_auto_20200430_0247'),
+        ("bookings", "0002_auto_20200430_0247"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='booking',
-            name='amount_paid',
+            model_name="booking",
+            name="amount_paid",
             field=models.FloatField(default=0),
             preserve_default=False,
         ),
