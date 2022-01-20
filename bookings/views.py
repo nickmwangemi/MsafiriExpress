@@ -104,8 +104,10 @@ def make_a_booking(request, pk):
         booking.amount_paid = int(booking.number_of_tickets) * int(price)
 
         cl = MpesaClient()
+        token = cl.access_token
+        print(token)
         # Use a Safaricom phone number that you have access to, for you to be able to view the prompt.
-        phone_number = request.user.mobile_number
+        phone_number = request.POST["mobile_number"]
         print(phone_number)
         amount = booking.amount_paid
         account_reference = "Msafiri Ticket"
