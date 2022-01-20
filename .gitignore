@@ -4,6 +4,7 @@
 
 .vscode
 env
+env.sh
 ### Django ###
 *.log
 *.pot
