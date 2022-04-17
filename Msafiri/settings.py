@@ -28,14 +28,15 @@ SECRET_KEY = os.environ.get(
 )
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG = os.environ.get("DJANGO_DEBUG", "") != "False"
+DEBUG = True
+# DEBUG = os.environ.get("DJANGO_DEBUG", "") != "False"
 
 ALLOWED_HOSTS = [
     "127.0.0.1",
     "msafiri.loclx.io",
     "e1d626d8.ngrok.io",
     "msafiriexpress.herokuapp.com",
+    "4b3f-197-254-97-186.ngrok.io"
 ]
 
 
@@ -90,7 +91,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "Msafiri.wsgi.application"
+# WSGI_APPLICATION = "Msafiri.wsgi.application"
 
 
 # Database
