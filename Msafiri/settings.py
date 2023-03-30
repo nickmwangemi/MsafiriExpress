@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
+import dj_database_url
 from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -21,23 +22,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = '*nzt4fpbi4^(!refangzopuq&8xb8vlo#7u6pusyzskg37=soi'
-SECRET_KEY = os.environ.get(
-    "DJANGO_SECRET_KEY", "*nzt4fpbi4^(!refangzopuq&8xb8vlo#7u6pusyzskg37=soi"
-)
-
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-# DEBUG = os.environ.get("DJANGO_DEBUG", "") != "False"
+DEBUG = os.environ.get("DJANGO_DEBUG", "true") == "true"
 
-ALLOWED_HOSTS = [
-    "127.0.0.1",
-    "msafiri.loclx.io",
-    "e1d626d8.ngrok.io",
-    "msafiriexpress.herokuapp.com",
-    "4b3f-197-254-97-186.ngrok.io"
-]
+# SECURITY WARNING: keep the secret key used in production secret!
+if DEBUG:
+    SECRET_KEY = "django-insecure-1q!zjpjmde2=yf0$doia!@74h-(f85(&&8)l05a+tt(b8g^rrt"
+else:
+    SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
+
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -96,17 +90,12 @@ TEMPLATES = [
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
+default_db_url = "postgres://msafiri:msafiri@localhost:5432/msafiri"
+default_db_config = dj_database_url.config(default=default_db_url)
+default_db_config["ATOMIC_REQUESTS"] = True
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "HOST": "127.0.0.1",
-        "PORT": 5432,
-        "NAME": "msafiri",
-        "USER": "postgres",
-        "PASSWORD": "boom",
-    }
-}
+
+DATABASES = {"default": default_db_config}
 
 
 # Password validation
@@ -159,10 +148,7 @@ MEDIA_URL = "/media/"
 MESSAGE_TAGS = {messages.ERROR: "danger"}
 
 # Heroku: Update database configuration from $DATABASE_URL.
-import dj_database_url
 
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES["default"].update(db_from_env)
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
